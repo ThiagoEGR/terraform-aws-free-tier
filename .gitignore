@@ -1,0 +1,26 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+
+# State files
+*.tfstate
+*.tfstate.*
+
+# Plan files
+*.tfplan
+
+# Variable files com segredos
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Arquivos locais
+*.pem
+*.key
+
+# VS Code
+.vscode/
+*.code-workspace
