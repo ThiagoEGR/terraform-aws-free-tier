@@ -6,11 +6,11 @@ module "vpc" {
   cidr = "10.0.0.0/16"
 
   azs             = ["us-east-1a", "us-east-1b"]
-  public_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
   private_subnets = ["10.0.11.0/24", "10.0.12.0/24"]
 
-  enable_dns_hostnames    = true
-  enable_nat_gateway = false
+  enable_dns_hostnames = true
+  enable_nat_gateway   = false
 }
 
 resource "aws_security_group" "web_app" {
@@ -53,8 +53,8 @@ resource "aws_vpc_security_group_ingress_rule" "postgresql" {
   security_group_id = aws_security_group.rds.id
 
   referenced_security_group_id = aws_security_group.web_app.id
-  from_port               = 5432
-  ip_protocol             = "tcp"
-  to_port                 = 5432
+  from_port                    = 5432
+  ip_protocol                  = "tcp"
+  to_port                      = 5432
 }
 
