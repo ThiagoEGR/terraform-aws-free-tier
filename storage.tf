@@ -1,7 +1,3 @@
-
-
-- DynamoDB Pedidos (PAY_PER_REQUEST; PK clienteId, SK pedidoId; GSI status-index por status, projeção ALL)
-
 resource "aws_db_instance" "rds_instance" {
   allocated_storage    = 20
   db_name              = "rds_instance"
