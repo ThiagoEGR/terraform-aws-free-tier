@@ -19,10 +19,15 @@ resource "aws_db_instance" "rds_instance" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-    versioning {
-        enabled = true
-    }
+  
+}
 
+resource "aws_s3_bucket_versioning" "bucket_versioning" {
+    bucket = aws_s3_bucket.bucket.id
+
+    versioning_configuration {
+        status = "Enabled"
+    }
 }
 
 resource "aws_s3_bucket_public_access_block" "bucket_public_access_block" {
