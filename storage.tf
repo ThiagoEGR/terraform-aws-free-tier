@@ -2,7 +2,7 @@ resource "aws_db_instance" "rds_instance" {
   allocated_storage    = 20
   db_name              = "rds_instance"
   engine               = "postgres"
-  engine_version       = "15.4"
+  engine_version       = "15.14"
   instance_class       = "db.t3.micro"
   username             = var.db_username
   password             = var.db_password
@@ -11,11 +11,12 @@ resource "aws_db_instance" "rds_instance" {
   
   multi_az            = false
   publicly_accessible = false
-  backup_retention_period = 7
   db_subnet_group_name = aws_db_subnet_group.rds_subnet_group.name
   vpc_security_group_ids = [aws_security_group.rds.id]  
   storage_type        = "gp2"
   
+  #It's not in the free tier 
+  #backup_retention_period = 7
 }
 
 resource "aws_s3_bucket" "bucket" {
@@ -39,8 +40,8 @@ resource "aws_s3_bucket_public_access_block" "bucket_public_access_block" {
     restrict_public_buckets = true
 }
 
-resource "aws_dynamodb_table" "orders" {
-  name           = "orders"
+resource "aws_dynamodb_table" "pedidos" {
+  name           = "pedidos"
   billing_mode   = "PAY_PER_REQUEST"
   hash_key       = "clienteId"
   range_key      = "pedidoId"
