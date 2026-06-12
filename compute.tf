@@ -14,7 +14,7 @@ resource "aws_instance" "app_server" {
   instance_type        = "t3.micro"
   subnet_id            = module.vpc.public_subnets[0]
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
-
+  
   vpc_security_group_ids = [
     aws_security_group.web_app.id
   ]
@@ -30,4 +30,19 @@ resource "aws_instance" "app_server" {
   tags = {
     Name = "learn-terraform"
   }
+}
+
+data "archive_file" "lambda_package" {
+  type        = "zip"
+  source_file = "${path.module}/lambda/index.js"
+  output_path = "${path.module}/lambda/function.zip"
+}
+
+resource "aws_lambda_function" "app_lambda" {
+  filename      = data.archive_file.lambda_package.output_path
+  function_name = "app_lambda"
+  role          = aws_iam_role.lambda_role.arn
+  handler       = "index.handler"
+  code_sha256   = data.archive_file.lambda_package.output_base64sha256
+  runtime = "nodejs20.x"
 }
