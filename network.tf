@@ -58,3 +58,8 @@ resource "aws_vpc_security_group_ingress_rule" "postgresql" {
   to_port                      = 5432
 }
 
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "rds-subnet-group"
+  subnet_ids = module.vpc.private_subnets
+}
+
